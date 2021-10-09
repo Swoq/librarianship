@@ -1,0 +1,1 @@
+![alt text for screen readers](/readme/img.png "Text to show on mouseover").
