@@ -25,6 +25,7 @@ public class ModelConstants {
     public static final String AUTHOR_TABLE_NAME = "author";
     public static final String BOOK_AUTHOR_TABLE_NAME = "book_author";
     public static final String AUTHOR_ID_COLUMN = "author_id";
+    public static final String SECURITY_USERS_TABLE = "security_users";
 
     private ModelConstants() {
     }

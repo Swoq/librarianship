@@ -2,6 +2,8 @@ package com.swoqe.librarianship.controller.rest;
 
 import com.swoqe.librarianship.dto.GenreDto;
 import com.swoqe.librarianship.exception.SwoqeException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/genres")
+
 public class GenreRestController extends BaseRestController {
 
     @GetMapping()
