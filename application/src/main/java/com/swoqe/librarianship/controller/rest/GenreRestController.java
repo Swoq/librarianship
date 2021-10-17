@@ -33,20 +33,18 @@ public class GenreRestController extends BaseRestController {
         return genreService.findById(uuid);
     }
 
-    @PostMapping("/create")
+    @PostMapping("/save")
     @PreAuthorize("hasAnyAuthority('BOOK_ADMIN')")
-    public String saveOrUpdateGenre(@RequestBody GenreDto genreDto) {
-        genreService.save(genreDto);
-        return "redirect:/";
+    public GenreDto saveOrUpdateGenre(@RequestBody GenreDto genreDto) {
+        return genreService.save(genreDto);
     }
 
     @PostMapping("/delete/{genreId}")
     @PreAuthorize("hasAnyAuthority('BOOK_ADMIN')")
-    public String deleteGenre(@PathVariable String genreId) throws SwoqeException {
+    public void deleteGenre(@PathVariable String genreId) throws SwoqeException {
         checkNotBlank("genreId", genreId);
         UUID uuid = toUUID(genreId);
         genreService.deleteById(uuid);
-        return "redirect:/";
     }
 
 
