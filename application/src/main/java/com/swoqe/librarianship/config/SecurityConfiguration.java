@@ -36,11 +36,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final SecurityUserRepository securityUserRepository;
     private final JwtTokenFilter jwtTokenFilter;
-//
-//    @Value("${springdoc.api-docs.path}")
-    private String restApiDocPath = "/v3/api-docs";
-//    @Value("${springdoc.swagger-ui.path}")
-    private String swaggerPath = "/swagger-ui";
 
     public SecurityConfiguration(SecurityUserRepository securityUserRepository,
                                  JwtTokenFilter jwtTokenFilter) {
@@ -92,6 +87,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 )
                 .and();
 
+        String restApiDocPath = "/v3/api-docs";
+        String swaggerPath = "/swagger-ui";
         // Set permissions on endpoints
         http.authorizeRequests()
                 // Swagger endpoints must be publicly accessible
@@ -100,10 +97,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(format("%s/**", swaggerPath)).permitAll()
                 // Our public endpoints
                 .antMatchers("/api/public/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/author/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/author/search").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/book/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/book/search").permitAll()
                 // Our private endpoints
                 .anyRequest().authenticated();
 

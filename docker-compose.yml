@@ -10,6 +10,7 @@ services:
     depends_on:
       - db
     environment:
+      - INITIALIZATION_MODE=true
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/librarianship
       - SPRING_DATASOURCE_USERNAME=librarianship
       - SPRING_DATASOURCE_PASSWORD=librarianship

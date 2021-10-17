@@ -4,6 +4,7 @@ import com.swoqe.librarianship.dto.GenreDto;
 import com.swoqe.librarianship.exception.SwoqeException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ public class GenreRestController extends BaseRestController {
     }
 
     @GetMapping("/find/{genreId}")
+    @PreAuthorize("hasAnyAuthority('COMMON_USER', 'BOOK_ADMIN')")
     public GenreDto findGenreById(@PathVariable String genreId) throws SwoqeException {
         checkNotBlank("genreId", genreId);
         UUID uuid = toUUID(genreId);
@@ -32,12 +34,14 @@ public class GenreRestController extends BaseRestController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasAnyAuthority('BOOK_ADMIN')")
     public String saveOrUpdateGenre(@RequestBody GenreDto genreDto) {
         genreService.save(genreDto);
         return "redirect:/";
     }
 
     @PostMapping("/delete/{genreId}")
+    @PreAuthorize("hasAnyAuthority('BOOK_ADMIN')")
     public String deleteGenre(@PathVariable String genreId) throws SwoqeException {
         checkNotBlank("genreId", genreId);
         UUID uuid = toUUID(genreId);

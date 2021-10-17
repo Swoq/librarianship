@@ -84,7 +84,7 @@ public class SecurityUserService implements UserDetailsService {
 
     private SecurityUser toSecurityUser(CreateUserRequest request) {
         SecurityUser user = new SecurityUser();
-        user.setAuthorities(Set.of(new Role(Role.COMMON_USER)));
+        user.setAuthorities(Set.of(new CustomAuthority(AuthoritiesNames.COMMON_USER)));
         user.setUsername(request.getUsername());
         return user;
     }
@@ -97,7 +97,9 @@ public class SecurityUserService implements UserDetailsService {
     }
 
     private void updateSecurityUser(SecurityUser user, UpdateUserRequest request) {
-        Set<Role> roles = request.getAuthorities().stream().map(Role::new).collect(Collectors.toSet());
-        user.setAuthorities(roles);
+        Set<CustomAuthority> authorities = request.getAuthorities()
+                .stream()
+                .map(str -> new CustomAuthority(AuthoritiesNames.valueOf(str))).collect(Collectors.toSet());
+        user.setAuthorities(authorities);
     }
 }

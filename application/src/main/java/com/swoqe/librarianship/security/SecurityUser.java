@@ -29,13 +29,12 @@ public class SecurityUser extends BaseSqlEntity implements UserDetails, Serializ
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> authorities = new HashSet<>();
+    private Set<CustomAuthority> authorities = new HashSet<>();
 
     @OneToOne
     private UserEntity userEntity;
 
-    public SecurityUser() {
-    }
+    public SecurityUser() {}
 
     public SecurityUser(String username, String password) {
         this.username = username;

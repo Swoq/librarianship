@@ -1,11 +1,11 @@
-package com.swoqe.librarianship.controller;
+package com.swoqe.librarianship.controller.rest;
 
-import com.swoqe.librarianship.security.jwt.JwtTokenUtil;
-import com.swoqe.librarianship.security.SecurityUser;
-import com.swoqe.librarianship.security.SecurityUserService;
 import com.swoqe.librarianship.config.dto.AuthRequest;
 import com.swoqe.librarianship.config.dto.CreateUserRequest;
 import com.swoqe.librarianship.config.dto.UserView;
+import com.swoqe.librarianship.security.SecurityUser;
+import com.swoqe.librarianship.security.SecurityUserService;
+import com.swoqe.librarianship.security.jwt.JwtTokenUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +25,7 @@ import javax.validation.Valid;
 @Tag(name = "Authentication")
 @RestController @RequestMapping(path = "api/public")
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthController extends BaseRestController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;

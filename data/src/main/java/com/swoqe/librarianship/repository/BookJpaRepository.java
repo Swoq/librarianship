@@ -12,14 +12,14 @@ import java.util.UUID;
 
 public interface BookJpaRepository extends JpaRepository<BookEntity, UUID> {
 
-    @Query("SELECT b FROM BookEntity b WHERE LOWER(b.title) LIKE LOWER(CONCAT(:textSearch, '%'))")
+    @Query("SELECT b FROM BookEntity b WHERE LOWER(b.title) LIKE LOWER(CONCAT('%', :textSearch, '%'))")
     Page<BookEntity> findByTitle(@Param("textSearch") String textSearch, Pageable pageable);
 
 
     @Query("SELECT DISTINCT b FROM BookEntity b " +
             "JOIN b.authors a " +
             "WHERE a = :author " +
-            "AND (b.title) LIKE LOWER(CONCAT(:textSearch, '%'))")
+            "AND (b.title) LIKE LOWER(CONCAT('%', :textSearch, '%'))")
     Page<BookEntity> findByTitleAndAuthor(@Param("author") AuthorEntity author,
                                           @Param("textSearch") String textSearch,
                                           Pageable pageable);

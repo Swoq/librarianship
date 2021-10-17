@@ -4,6 +4,7 @@ import com.swoqe.librarianship.common.page.PageLink;
 import com.swoqe.librarianship.common.page.SortOrder;
 import com.swoqe.librarianship.exception.SwoqeErrorCode;
 import com.swoqe.librarianship.exception.SwoqeException;
+import com.swoqe.librarianship.service.AuthorService;
 import com.swoqe.librarianship.service.GenreService;
 import com.swoqe.librarianship.service.BookService;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,9 @@ public abstract class BaseRestController {
 
     @Autowired
     protected BookService bookService;
+
+    @Autowired
+    protected AuthorService authorService;
 
     void checkNotBlank(String name, String param) throws SwoqeException {
         if (StringUtils.isBlank(param)) {
