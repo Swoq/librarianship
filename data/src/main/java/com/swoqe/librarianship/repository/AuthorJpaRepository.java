@@ -24,7 +24,7 @@ public interface AuthorJpaRepository extends JpaRepository<AuthorEntity, UUID> {
             "WHERE b = :book " +
             "AND LOWER(CONCAT(a.firstName, a.lastName)) " +
             "LIKE LOWER(CONCAT('%', :textSearch, '%'))")
-    Page<AuthorEntity> findByFirstAndLastNamesAndBook(@Param("author") BookEntity book,
+    Page<AuthorEntity> findByFirstAndLastNamesAndBook(@Param("book") BookEntity book,
                                                       @Param("textSearch") String textSearch,
                                                       Pageable pageable);
 }
