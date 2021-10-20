@@ -88,13 +88,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and();
 
         String restApiDocPath = "/v3/api-docs";
-        String swaggerPath = "/swagger-ui";
+        String swaggerPath1 = "/swagger-ui";
+        String swaggerPath2 = "/swagger-ui.*";
         // Set permissions on endpoints
         http.authorizeRequests()
                 // Swagger endpoints must be publicly accessible
                 .antMatchers("/").permitAll()
                 .antMatchers(format("%s/**", restApiDocPath)).permitAll()
-                .antMatchers(format("%s/**", swaggerPath)).permitAll()
+                .antMatchers(format("%s/**", swaggerPath1)).permitAll()
+                .antMatchers(format("%s/**", swaggerPath2)).permitAll()
                 // Our public endpoints
                 .antMatchers("/api/public/**").permitAll()
                 // Our private endpoints
