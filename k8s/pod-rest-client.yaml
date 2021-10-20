@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rest-client-pod
+  labels:
+    component: rest
+spec:
+  containers:
+    - name: rest-client
+      image: swoqe/librarianship-rest-client
+      ports:
+        - containerPort: 8080
