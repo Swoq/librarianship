@@ -6,6 +6,7 @@
     <modules>
         <module>data</module>
         <module>application</module>
+        <module>ui</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -13,7 +14,7 @@
         <version>2.5.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
+    <groupId>com.swoqe</groupId>
     <artifactId>librarianship</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>librarianship</name>

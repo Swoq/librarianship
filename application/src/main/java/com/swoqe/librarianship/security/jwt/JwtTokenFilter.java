@@ -14,9 +14,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
 
 import static java.util.List.of;
 import static java.util.Optional.ofNullable;
@@ -33,7 +36,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain chain) throws ServletException, IOException {
         // Get authorization header and validate
-        final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+        final String header = findHeaderToken(request).orElseGet(() -> findCookiesToken(request).orElse(null));
         if (StringUtils.isBlank(header) || !header.startsWith("Bearer ")) {
             chain.doFilter(request, response);
             return;
@@ -61,5 +65,17 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         chain.doFilter(request, response);
+    }
+
+    private Optional<String> findHeaderToken(HttpServletRequest request) {
+        return Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION));
+    }
+
+    private Optional<String> findCookiesToken(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        return Arrays.stream(cookies)
+                .filter(cookie -> HttpHeaders.AUTHORIZATION.equals(cookie.getName()))
+                .findFirst()
+                .map(Cookie::getValue);
     }
 }

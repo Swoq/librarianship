@@ -44,7 +44,7 @@ public class AuthorRestController extends BaseRestController {
         return authorService.save(authorDto);
     }
 
-    @PostMapping("/delete/{authorId}")
+    @DeleteMapping("/delete/{authorId}")
     @PreAuthorize("hasAnyAuthority('BOOK_ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deleteAuthor(@PathVariable String authorId) throws SwoqeException {

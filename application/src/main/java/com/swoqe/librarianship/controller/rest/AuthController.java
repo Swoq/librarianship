@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Tag(name = "Authentication")
-@RestController @RequestMapping(path = "api/public")
+@RestController @RequestMapping(path = "api/")
 @RequiredArgsConstructor
 public class AuthController extends BaseRestController {
 
@@ -32,7 +34,7 @@ public class AuthController extends BaseRestController {
     private final SecurityUserService securityUserService;
 
     @PostMapping("login")
-    public ResponseEntity<UserView> login(@RequestBody @Valid AuthRequest request) {
+    public ResponseEntity<UserView> login(@RequestBody @Valid AuthRequest request, HttpServletResponse response) {
         try {
             Authentication authenticate = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
@@ -41,8 +43,11 @@ public class AuthController extends BaseRestController {
             UserView userView = new UserView();
             userView.setUsername(user.getUsername());
             userView.setId(user.getId());
+
+            String token = "Bearer " + jwtTokenUtil.generateAccessToken(user);
+            response.addCookie(new Cookie(HttpHeaders.AUTHORIZATION, token));
             return ResponseEntity.ok()
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtTokenUtil.generateAccessToken(user))
+                    .header(HttpHeaders.AUTHORIZATION, token)
                     .body(userView);
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

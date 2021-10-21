@@ -94,6 +94,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // Swagger endpoints must be publicly accessible
                 .antMatchers("/").permitAll()
+                .antMatchers("/api/login").permitAll()
                 .antMatchers(format("%s/**", restApiDocPath)).permitAll()
                 .antMatchers(format("%s/**", swaggerPath1)).permitAll()
                 .antMatchers(format("%s/**", swaggerPath2)).permitAll()

@@ -44,7 +44,7 @@ public class BookRestController extends BaseRestController {
         return bookService.save(bookDto);
     }
 
-    @PostMapping("/delete/{bookId}")
+    @DeleteMapping("/delete/{bookId}")
     @PreAuthorize("hasAnyAuthority('BOOK_ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deleteBook(@PathVariable String bookId) throws SwoqeException {
