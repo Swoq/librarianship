@@ -22,7 +22,7 @@ spec:
             - name: INITIALIZATION_MODE
               value: "true"
             - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://77.47.216.74:5432/librarianship"
+              value: "jdbc:postgresql://cluster-ipi-service-postgres:5432/librarianship"
             - name: SPRING_DATASOURCE_USERNAME
               value: "postgres"
             - name: SPRING_DATASOURCE_PASSWORD
