@@ -1,0 +1,5 @@
+web_client:
+  base_host: "${WEB_CLIENT_BASE_HOST:http://localhost:8080}"
+  timeout: "${WEB_CLIENT_TIMEOUT:1000}"
+server:
+  port: "${SERVER_PORT: 8081}"

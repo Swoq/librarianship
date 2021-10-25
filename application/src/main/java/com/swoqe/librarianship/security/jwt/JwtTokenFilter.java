@@ -32,19 +32,18 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private final SecurityUserRepository securityUserRepository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain chain) throws ServletException, IOException {
-        // Get authorization header and validate
-
+        // Get authorization and validate
         final String header = findHeaderToken(request).orElseGet(() -> findCookiesToken(request).orElse(null));
-        if (StringUtils.isBlank(header) || !header.startsWith("Bearer ")) {
+        if (StringUtils.isBlank(header)) {
             chain.doFilter(request, response);
             return;
         }
 
         // Get jwt token and validate
-        final String token = header.split(" ")[1].trim();
+        final String token = header.trim();
         if (!jwtTokenUtil.validate(token)) {
             chain.doFilter(request, response);
             return;
@@ -73,9 +72,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private Optional<String> findCookiesToken(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
-        return Arrays.stream(cookies)
-                .filter(cookie -> HttpHeaders.AUTHORIZATION.equals(cookie.getName()))
-                .findFirst()
-                .map(Cookie::getValue);
+        if (cookies != null) {
+            return Arrays.stream(cookies)
+                    .filter(cookie -> HttpHeaders.AUTHORIZATION.equals(cookie.getName()))
+                    .findFirst()
+                    .map(Cookie::getValue);
+        }
+        else {
+            return Optional.empty();
+        }
     }
 }

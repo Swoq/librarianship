@@ -1,8 +1,9 @@
 package com.swoqe.librarianship.controller.rest;
 
-import com.swoqe.librarianship.config.dto.AuthRequest;
-import com.swoqe.librarianship.config.dto.CreateUserRequest;
-import com.swoqe.librarianship.config.dto.UserView;
+import com.swoqe.librarianship.dto.security.AuthRequest;
+import com.swoqe.librarianship.dto.security.AuthResponse;
+import com.swoqe.librarianship.dto.security.CreateUserRequest;
+import com.swoqe.librarianship.dto.security.UserView;
 import com.swoqe.librarianship.security.SecurityUser;
 import com.swoqe.librarianship.security.SecurityUserService;
 import com.swoqe.librarianship.security.jwt.JwtTokenUtil;
@@ -34,21 +35,20 @@ public class AuthController extends BaseRestController {
     private final SecurityUserService securityUserService;
 
     @PostMapping("login")
-    public ResponseEntity<UserView> login(@RequestBody @Valid AuthRequest request, HttpServletResponse response) {
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest request, HttpServletResponse response) {
         try {
             Authentication authenticate = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
             SecurityUser user = (SecurityUser) authenticate.getPrincipal();
-            UserView userView = new UserView();
-            userView.setUsername(user.getUsername());
-            userView.setId(user.getId());
 
-            String token = "Bearer " + jwtTokenUtil.generateAccessToken(user);
+            String token = jwtTokenUtil.generateAccessToken(user);
+            AuthResponse authResponse = new AuthResponse(token, user.getId());
+
             response.addCookie(new Cookie(HttpHeaders.AUTHORIZATION, token));
             return ResponseEntity.ok()
                     .header(HttpHeaders.AUTHORIZATION, token)
-                    .body(userView);
+                    .body(authResponse);
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

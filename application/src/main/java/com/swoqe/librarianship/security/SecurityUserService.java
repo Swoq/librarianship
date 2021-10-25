@@ -1,8 +1,8 @@
 package com.swoqe.librarianship.security;
 
-import com.swoqe.librarianship.config.dto.CreateUserRequest;
-import com.swoqe.librarianship.config.dto.UpdateUserRequest;
-import com.swoqe.librarianship.config.dto.UserView;
+import com.swoqe.librarianship.dto.security.CreateUserRequest;
+import com.swoqe.librarianship.dto.security.UpdateUserRequest;
+import com.swoqe.librarianship.dto.security.UserView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

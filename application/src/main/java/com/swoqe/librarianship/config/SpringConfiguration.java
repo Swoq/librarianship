@@ -10,12 +10,5 @@ import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 @Configuration
 public class SpringConfiguration {
 
-    @Bean
-    public ModelMapper modelMapper() {
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STRICT)
-                .setSkipNullEnabled(true);
-        return mapper;
-    }
+
 }

@@ -1,8 +1,7 @@
-package com.swoqe.librarianship.config.dto;
+package com.swoqe.librarianship.dto.security;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Data

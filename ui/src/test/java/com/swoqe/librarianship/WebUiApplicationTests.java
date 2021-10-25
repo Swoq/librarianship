@@ -1,4 +1,4 @@
-package com.swoqe.ui;
+package com.swoqe.librarianship;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
