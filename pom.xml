@@ -5,7 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>data</module>
-        <module>application</module>
+        <module>rest-api</module>
         <module>ui</module>
     </modules>
     <parent>

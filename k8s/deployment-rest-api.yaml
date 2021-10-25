@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rest-client-deployment
+  name: rest-api-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: rest-client
+      component: rest-api
   template:
     metadata:
-      name: rest-client-pod
+      name: rest-api-pod
       labels:
-        component: rest-client
+        component: rest-api
     spec:
       containers:
-        - name: rest-client
-          image: swoqe/librarianship-rest-client
+        - name: rest-api-container
+          image: swoqe/librarianship-rest-api
           ports:
             - containerPort: 8080
           env:
@@ -26,4 +26,7 @@ spec:
             - name: SPRING_DATASOURCE_USERNAME
               value: "postgres"
             - name: SPRING_DATASOURCE_PASSWORD
-              value: "1"
+                valueFrom:
+                  secretKeyRef:
+                    name: pgpassword
+                    key: PGPASSWORD
