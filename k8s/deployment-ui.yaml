@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: ui
+  template:
+    metadata:
+      name: ui-pod
+      labels:
+        component: ui
+    spec:
+      containers:
+        - name: ui-container
+          image: swoqe/librarianship-ui
+          ports:
+            - containerPort: 8081

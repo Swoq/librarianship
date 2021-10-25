@@ -1,29 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rest-client-deployment
+  name: rest-api-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: rest-client
+      component: rest-api
   template:
     metadata:
-      name: rest-client-pod
+      name: rest-api-pod
       labels:
-        component: rest-client
+        component: rest-api
     spec:
       containers:
-        - name: rest-client
-          image: swoqe/librarianship-rest-client
+        - name: rest-api-container
+          image: swoqe/librarianship-rest-api
           ports:
             - containerPort: 8080
           env:
             - name: INITIALIZATION_MODE
               value: "true"
             - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://192.168.1.153:5432/librarianship"
+              value: "jdbc:postgresql://cluster-ipi-service-postgres:5432/librarianship"
             - name: SPRING_DATASOURCE_USERNAME
               value: "postgres"
             - name: SPRING_DATASOURCE_PASSWORD
-              value: "1"
+                valueFrom:
+                  secretKeyRef:
+                    name: pgpassword
+                    key: PGPASSWORD

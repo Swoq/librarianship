@@ -4,7 +4,7 @@ services:
   spring-app:
 #    image: 'swoqe/spring_labs:lab2'
     build:
-      dockerfile: Dockerfile
+      dockerfile: rest-api/docker/Dockerfile
       context: .
     container_name: spring-app
     depends_on:
