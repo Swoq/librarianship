@@ -3,32 +3,34 @@ package com.swoqe.librarianship.ui.service;
 import com.swoqe.librarianship.common.page.PageData;
 import com.swoqe.librarianship.dto.UUIDBased;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @AllArgsConstructor
+@NoArgsConstructor
 public abstract class AbstractRestService<T extends UUIDBased> implements RestService<T> {
-    private final WebClient webClient;
+    private WebClient webClient;
 
-    public final Mono<T> getByIdAsync(final String id) {
+    public final Mono<T> getByIdAsync(ParameterizedTypeReference<T> typeReference, final String id) {
         return webClient
                 .get()
-                .uri(getUri() + "/" + id)
+                .uri(getUri() + "/find/" + id)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<T>() {});
+                .bodyToMono(typeReference);
     }
 
-    public final T getByIdSync(final String id) {
+    public final T getByIdSync(ParameterizedTypeReference<T> typeReference, final String id) {
         return webClient
                 .get()
-                .uri(getUri() + "/" + id)
+                .uri(getUri() + "/find/" + id)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<T>() {})
+                .bodyToMono(typeReference)
                 .block();
     }
 
-    public final PageData<T> getPageSync(int pageSize, int page) {
+    public final PageData<T> getPageSync(ParameterizedTypeReference<PageData<T>> typeReference, int pageSize, int page) {
         return webClient
                 .get()
                 .uri(uriBuilder -> uriBuilder
@@ -38,16 +40,16 @@ public abstract class AbstractRestService<T extends UUIDBased> implements RestSe
                         .build()
                 )
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<PageData<T>>() {})
+                .bodyToMono(typeReference)
                 .block();
     }
 
-    public final Mono<PageData<T>> getPageAsync() {
+    public final Mono<PageData<T>> getPageAsync(ParameterizedTypeReference<PageData<T>> typeReference) {
         return webClient
                 .get()
                 .uri(getUri())
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<>() {});
+                .bodyToMono(typeReference);
     }
 
     public abstract String getUri();

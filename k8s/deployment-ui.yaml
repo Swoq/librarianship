@@ -18,3 +18,6 @@ spec:
           image: swoqe/librarianship-ui
           ports:
             - containerPort: 8081
+          env:
+            - name: WEB_CLIENT_BASE_HOST
+              value: "http://cluster-ip-service-rest-api:8080"

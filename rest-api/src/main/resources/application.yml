@@ -1,5 +1,5 @@
 server:
-  port: "${SERVER_PORT: 8080}"
+  port: "${SERVER_PORT:8080}"
 
 spring:
   datasource:
@@ -8,17 +8,20 @@ spring:
       maximum-pool-size: 10
 
     driver-class-name: org.postgresql.Driver
-    username: "${SPRING_DATA_SOURCE_USERNAME: postgres}"
-    password: "${SPRING_DATA_SOURCE_PASSWORD: postgres}"
-    url: "${SPRING_DATA_SOURCE_URL: jdbc:postgresql://localhost:5432/librarianship}"
+    username: "${SPRING_DATA_SOURCE_USERNAME:postgres}"
+    password: "${SPRING_DATA_SOURCE_PASSWORD:postgres}"
+    url: "${SPRING_DATA_SOURCE_URL:jdbc:postgresql://localhost:5432/librarianship}"
 
   jpa:
     hibernate:
-      ddl-auto: "${SPRING_JPA_HIBERNATE_DDL_AUTO: update}"
+      ddl-auto: "${SPRING_JPA_HIBERNATE_DDL_AUTO:update}"
 
   mvc:
     format:
       date-time: iso
 
+initialization_mode: "${INITIALIZATION_MODE:false}"
 
-initialization_mode: "${INITIALIZATION_MODE: false}"
+springdoc:
+  swagger-ui:
+    path: /swagger-ui

@@ -3,6 +3,7 @@ package com.swoqe.librarianship.config;
 import com.swoqe.librarianship.security.SecurityUserRepository;
 import com.swoqe.librarianship.security.jwt.JwtTokenFilter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,6 +37,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final SecurityUserRepository securityUserRepository;
     private final JwtTokenFilter jwtTokenFilter;
+
+    @Value("${springdoc.swagger-ui.path}")
+    private String swaggerPath;
 
     public SecurityConfiguration(SecurityUserRepository securityUserRepository,
                                  JwtTokenFilter jwtTokenFilter) {
@@ -88,16 +92,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and();
 
         String restApiDocPath = "/v3/api-docs";
-        String swaggerPath1 = "/swagger-ui";
-        String swaggerPath2 = "/swagger-ui.*";
+        String swaggerPath = "/swagger-ui";
         // Set permissions on endpoints
         http.authorizeRequests()
                 // Swagger endpoints must be publicly accessible
                 .antMatchers("/").permitAll()
                 .antMatchers("/api/login").permitAll()
+                .antMatchers("/api/register").permitAll()
                 .antMatchers(format("%s/**", restApiDocPath)).permitAll()
-                .antMatchers(format("%s/**", swaggerPath1)).permitAll()
-                .antMatchers(format("%s/**", swaggerPath2)).permitAll()
+                .antMatchers(format("%s/**", swaggerPath)).permitAll()
                 // Our public endpoints
                 .antMatchers("/api/public/**").permitAll()
                 // Our private endpoints
@@ -106,6 +109,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // Add JWT token filter
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
 
     // Used by spring security if CORS is enabled.
     @Bean
