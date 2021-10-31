@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 public class AuthRequest {
 
     @NotNull @Email
-    private String username;
+    private String email;
     @NotNull
     private String password;
 

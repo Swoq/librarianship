@@ -28,7 +28,7 @@ public class SecurityUserService implements UserDetailsService {
 
     @Transactional
     public UserView create(CreateUserRequest request) {
-        if (securityUserRepository.findByUsername(request.getUsername()).isPresent()) {
+        if (securityUserRepository.findByUsername(request.getEmail()).isPresent()) {
             throw new ValidationException("Username exists!");
         }
         if (!request.getPassword().equals(request.getRePassword())) {
@@ -85,7 +85,7 @@ public class SecurityUserService implements UserDetailsService {
     private SecurityUser toSecurityUser(CreateUserRequest request) {
         SecurityUser user = new SecurityUser();
         user.setAuthorities(Set.of(new CustomAuthority(AuthoritiesNames.COMMON_USER)));
-        user.setUsername(request.getUsername());
+        user.setUsername(request.getEmail());
         return user;
     }
 

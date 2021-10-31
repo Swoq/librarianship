@@ -1,13 +1,44 @@
+<!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Login</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/sign-in/">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <link th:href="@{css/login.css}" rel="stylesheet">
 </head>
 <body>
-    <form action="#" th:action="@{/login/perform}" method="post" th:object="${loginRequest}">
-        <p>Username (email): <input type="text" th:field="*{username}" /></p>
-        <p>Password: <input type="text" th:field="*{password}" /></p>
-        <p><input type="submit" value="Submit" /></p>
+<div class="login-form">
+    <form th:action="@{/login/perform}" th:object="${loginRequest}" method="post">
+        <div class="avatar"><i class="material-icons">&#xE7FF;</i></div>
+        <h4 class="modal-title">Login to Your Account</h4>
+
+        <div class="form-group">
+            <p th:each="error: ${#fields.errors('email')}"
+               th:text="${error}" class="text-danger self-align-center">Validation error</p>
+            <input type="text" class="form-control" th:field="*{email}" placeholder="Email" required="required">
+        </div>
+        <div class="form-group">
+            <p th:each="error: ${#fields.errors('password')}"
+               th:text="${error}" class="text-danger self-align-center">Validation error</p>
+            <input type="password" class="form-control" th:field="*{password}" placeholder="Password" required="required">
+        </div>
+        <div class="form-group small clearfix">
+            <label class="form-check-label"><input type="checkbox" name="rememberMe"> Remember me</label>
+            <a href="#" class="forgot-link">Forgot Password?</a>
+        </div>
+        <input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
     </form>
+    <div class="text-center small">Don't have an account? <a th:href="@{/registration}">Sign up</a></div>
+    <div class="text-center"><a style="color: dimgrey" th:href="@{/}">Main Page</a></div>
+</div>
 </body>
 </html>

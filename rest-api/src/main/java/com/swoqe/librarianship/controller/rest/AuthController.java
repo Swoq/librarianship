@@ -38,7 +38,7 @@ public class AuthController extends BaseRestController {
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest request, HttpServletResponse response) {
         try {
             Authentication authenticate = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+                    .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
             SecurityUser user = (SecurityUser) authenticate.getPrincipal();
 
@@ -54,7 +54,7 @@ public class AuthController extends BaseRestController {
         }
     }
 
-    @PostMapping("register")
+    @PostMapping("registration")
     public UserView register(@RequestBody @Valid CreateUserRequest request) {
         return securityUserService.create(request);
     }
